@@ -1,0 +1,13 @@
+{
+    "bot": {
+        "token": "",
+        "prefix": "\\",
+        "color": "0x000000"
+    },
+    "database": {
+        "host": "",
+        "database": "",
+        "username": "",
+        "password": ""
+    }
+}

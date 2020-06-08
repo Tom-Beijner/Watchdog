@@ -1,0 +1,38 @@
+{
+    "name": "watchdog",
+    "version": "0.1.0",
+    "repository": "https://github.com/Tom-Beijner/Watchdog",
+    "author": {
+        "name": "Tom Beijner",
+        "email": "tom.beijner@gmail.com",
+        "url": "https://tombeijner.com"
+    },
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "start": "node dist",
+        "start:dev": "nodemon dist",
+        "prepublishOnly": "yarn build",
+        "build": "tsc",
+        "build:watch": "tsc --watch --preserveWatchOutput",
+        "dev": "yarn run build && concurrently \"yarn:build:watch\" \"yarn:start:dev\""
+    },
+    "dependencies": {
+        "chart.js": "^2.9.3",
+        "chartjs-node-canvas": "^3.0.6",
+        "cli-progress": "^3.8.2",
+        "eris": "^0.13.1",
+        "eris-fleet": "^0.2.1",
+        "mongoose": "^5.9.18",
+        "node-schedule": "^1.3.2"
+    },
+    "devDependencies": {
+        "@types/cli-progress": "^3.7.0",
+        "@types/mongoose": "^5.7.23",
+        "@types/node": "^14.0.11",
+        "@types/node-schedule": "^1.3.0",
+        "concurrently": "^5.2.0",
+        "nodemon": "^2.0.4",
+        "typescript": "^3.9.5"
+    }
+}
