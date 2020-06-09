@@ -48,7 +48,7 @@ export default class CommandContext {
     }
 
     get me() {
-        return this.guild!.members.get(this.bot.client.user.id)!;
+        return this.guild!.members.get(this.bot.user.id)!;
     }
 
     async dm(options: DMOptions) {

@@ -9,7 +9,7 @@ interface Options {
 }
 
 export default class Database {
-    options: Options;
+    private options: Options;
     constructor(options: Options) {
         this.options = options;
     }

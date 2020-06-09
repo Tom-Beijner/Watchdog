@@ -1,12 +1,13 @@
 import BaseEvent from "../structures/BaseEvent";
-import { Client, Message } from "eris";
+import { Message } from "eris";
+import Watchdog from "../structures/Watchdog";
 
 export default class messageCreate extends BaseEvent {
-    constructor(bot: Client) {
-        super(bot, {
+    constructor() {
+        super({
             event: "messageCreate",
         });
     }
 
-    async execute(message: Message) {}
+    async execute(bot: Watchdog["bot"], message: Message) {}
 }

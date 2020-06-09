@@ -13,7 +13,7 @@ export default class Help extends BaseCommand {
         });
     }
 
-    public execute(ctx: Context, base: Watchdog) {
+    async execute(ctx: Context, base: Watchdog) {
         const embed = new DiscordEmbed();
 
         if (!ctx.args.length) {

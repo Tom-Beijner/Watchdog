@@ -17,7 +17,7 @@ export default class Info extends BaseCommand {
         });
     }
 
-    public execute(ctx: Context) {
+    async execute(ctx: Context) {
         const embed = new DiscordEmbed();
 
         embed.setColor(parseInt(config.bot.color));

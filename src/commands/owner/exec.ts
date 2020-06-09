@@ -4,22 +4,22 @@ import config from "../../config.json";
 import { execSync } from "child_process";
 import DiscordEmbed from "../../utils/DiscordEmbed";
 import { Message } from "eris";
-import Watchdog from "../../structures/Watchdog";
-export default class Update extends BaseCommand {
+
+export default class Exec extends BaseCommand {
     constructor() {
         super({
-            name: "update",
-            description: "Update the bot",
-            usage: "update",
-            aliases: [],
+            name: "exec",
+            description: "Run code inside of the bot",
+            usage: "exec <code>",
+            aliases: ["shell"],
             requirements: [],
             deleteMessage: false,
         });
     }
 
-    async execute(ctx: Context, base: Watchdog) {
+    async execute(ctx: Context) {
         const message: Message = await ctx.send("Executing code...");
-        const code: string = "git pull";
+        const code: string = ctx.args.join(" ");
         const embed: DiscordEmbed = new DiscordEmbed().setTitle("Exec");
 
         function redact(code: string) {
@@ -37,7 +37,9 @@ export default class Update extends BaseCommand {
         }
 
         try {
-            const res = redact(execSync(code).toString().trim());
+            let result: string = execSync(code).toString().trim();
+
+            const res = redact(result);
             embed.addField("Output", `\`\`\`js\n${res}\`\`\``);
             await message.edit({ content: "", embed: embed.getEmbed() });
         } catch (e) {
@@ -45,8 +47,5 @@ export default class Update extends BaseCommand {
             embed.addField("Error", `\`\`\`js\n${e.message}\`\`\``);
             await message.edit({ content: "", embed: embed.getEmbed() });
         }
-
-        console.log("Restarting the bot");
-        base.ipc.restartAllClusters();
     }
 }

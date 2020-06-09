@@ -1,5 +1,5 @@
 import { Events } from "../constants";
-import { Client } from "eris";
+import Watchdog from "./Watchdog";
 
 // Make the event name get a type from the eris types events list
 // Maybe also make the execute function follow the listener function properties
@@ -9,11 +9,9 @@ interface MetaData {
 }
 
 export default abstract class BaseEvent {
-    public bot: Client;
     public meta: MetaData;
 
-    constructor(bot: Client, meta: MetaData) {
-        this.bot = bot;
+    constructor(meta: MetaData) {
         this.meta = meta;
     }
 
@@ -21,5 +19,5 @@ export default abstract class BaseEvent {
      * @arg {any[]} args Required amount of args depending on the event
      * @returns {Promise<any>} Return a promise of any kind
      */
-    public abstract execute(...args: any[]): Promise<any>;
+    public abstract execute(bot: Watchdog["bot"], ...args: any[]): Promise<any>;
 }

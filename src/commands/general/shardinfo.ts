@@ -16,7 +16,7 @@ export default class Shardinfo extends BaseCommand {
         });
     }
 
-    public async execute(ctx: Context, base: Watchdog) {
+    async execute(ctx: Context, base: Watchdog) {
         let info = "";
 
         const stats: any = await base.ipc.getStats();

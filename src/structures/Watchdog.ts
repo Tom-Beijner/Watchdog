@@ -17,7 +17,7 @@ const readdir = util.promisify(fs.readdir);
 
 // Have a better way for this
 interface Setup {
-    bot: Client;
+    bot: Client & { owners: string[] };
     clusterID: number;
     workerID: number;
 }
@@ -150,12 +150,12 @@ export default class Watchdog extends BaseClusterWorker {
             const event = require(path.join(__dirname, `../events/${file}`));
 
             try {
-                const Event: BaseEvent = new event.default(this.bot);
+                const Event: BaseEvent = new event.default();
                 const EventData = Event.meta;
                 this.events.push(Event);
                 this.bot[EventData.runOnce ? "once" : "on"](
                     EventData.event,
-                    Event.execute.bind(this)
+                    Event.execute.bind(this.bot, this)
                 );
                 bar.increment(1, {
                     name: EventData.event,

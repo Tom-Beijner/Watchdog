@@ -14,7 +14,7 @@ export default class Info extends BaseCommand {
         });
     }
 
-    public async execute(ctx: Context) {
+    async execute(ctx: Context) {
         const startedAt = Date.now();
         const msg = await ctx.channel.createMessage(
             ":ping_pong: Calculating ping"

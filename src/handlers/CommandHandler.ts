@@ -102,12 +102,16 @@ export default class CommandHandler {
                     //     };
                     // }
 
-                    if (command.meta.deleteMessage === true)
-                        await message.delete();
-
                     const commandArgs = [...args];
                     commandArgs.shift();
                     const ctx = new Context(this.bot, message, commandArgs);
+
+                    if (
+                        command.meta.deleteMessage === true &&
+                        ctx.me.permission.has("manageMessages")
+                    )
+                        await message.delete();
+
                     await command.execute(ctx, this.base);
 
                     return true;

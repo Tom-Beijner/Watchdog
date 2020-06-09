@@ -510,10 +510,10 @@ end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-eris-fleet@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/eris-fleet/-/eris-fleet-0.2.1.tgz#da152be6f934ec7e87315a2f42e6c8a6d015a6e7"
-  integrity sha512-tOxlC2D+Yjqc2hpMolsCkUGgfKPTrB8DlWtAq9t6RgrTXJxvIPnsARrkw2vJ40cOOHrVwYVK0BSGGPHnb8eeew==
+eris-fleet@0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/eris-fleet/-/eris-fleet-0.2.2.tgz#4130215a15c7866ce085723013e5c90fd93875db"
+  integrity sha512-DlWywXaSknI36DeH4OVSC89EPs6arkV543HeL59SFHH4cvi9fWpi7UwlV7VBHNPCPu0cGLfPEywTBOwbqFFcRA==
   dependencies:
     eris "^0.13.1"
 

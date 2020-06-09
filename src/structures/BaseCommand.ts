@@ -39,7 +39,7 @@ export default abstract class BaseCommand {
      * @arg {string[]} args Array of all the args sent with the command
      * @returns {Promise<any>} Return a promise of any kind
      */
-    public abstract execute(ctx: Context, base: Watchdog): Promise<any>;
+    public abstract execute(ctx: Context, base?: Watchdog): Promise<any>;
 
     public checkPermissions(permissions: Permission): boolean {
         for (const perm of this.meta.requirements) {

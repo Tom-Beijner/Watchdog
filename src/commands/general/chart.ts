@@ -16,7 +16,7 @@ export default class Info extends BaseCommand {
         });
     }
 
-    public async execute(ctx: Context, base: Watchdog) {
+    async execute(ctx: Context, base: Watchdog) {
         const width = 1400;
         const height = 800;
         const ticksOptions = [{ ticks: { fontColor: "white", fontSize: 16 } }];
