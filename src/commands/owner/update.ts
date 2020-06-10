@@ -4,7 +4,7 @@ import { execSync } from "child_process";
 import DiscordEmbed from "../../structures/DiscordEmbed";
 import { Message } from "eris";
 import Watchdog from "../../structures/Watchdog";
-import { redact } from "../../utils";
+import { hastebin, redact } from "../../utils";
 import config from "../../config.json";
 
 export default class Update extends BaseCommand {
@@ -29,7 +29,21 @@ export default class Update extends BaseCommand {
 
         try {
             const res = exec("git pull");
-            embed.addField("Output", `\`\`\`js\n${res}\`\`\``);
+            if (res.length >= 40000) {
+                embed.addField(
+                    "Yeah... but no",
+                    "The output was too long to be uploaded to hastebin"
+                );
+            } else {
+                embed.addField(
+                    "Output",
+                    res.length > 1024
+                        ? `The output was too long, but was uploaded to [hastebin](https://hasteb.in/${await hastebin(
+                              res
+                          )})`
+                        : `\`\`\`js\n${res}\`\`\``
+                );
+            }
             await message.edit({ content: "", embed: embed.getEmbed() });
 
             if (res !== "Already up to date.") {
@@ -38,8 +52,23 @@ export default class Update extends BaseCommand {
                 base.ipc.restartAllClusters();
             }
         } catch (e) {
+            const error = redact(e.stack);
             embed.setColor(parseInt(config.bot.color));
-            embed.addField("Error", `\`\`\`js\n${e.message}\`\`\``);
+            if (error.length >= 40000) {
+                embed.addField(
+                    "Yeah... but no",
+                    "The error was too long to be uploaded to hastebin"
+                );
+            } else {
+                embed.addField(
+                    "Error",
+                    error.length > 1024
+                        ? `The error was too long, but was uploaded to [hastebin](https://hasteb.in/${await hastebin(
+                              error
+                          )})`
+                        : `\`\`\`js\n${error}\`\`\``
+                );
+            }
             await message.edit({ content: "", embed: embed.getEmbed() });
         }
     }
