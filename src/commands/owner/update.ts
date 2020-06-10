@@ -21,15 +21,19 @@ export default class Update extends BaseCommand {
 
     async execute(ctx: Context, base: Watchdog) {
         const message: Message = await ctx.send("Executing code...");
-        const code: string = "git pull";
         const embed: DiscordEmbed = new DiscordEmbed().setTitle("Exec");
 
+        function exec(code) {
+            return Redact(execSync(code).toString().trim());
+        }
+
         try {
-            const res = Redact(execSync(code).toString().trim());
+            const res = exec("git pull");
             embed.addField("Output", `\`\`\`js\n${res}\`\`\``);
             await message.edit({ content: "", embed: embed.getEmbed() });
 
             if (res !== "Already up to date.") {
+                exec("yarn build");
                 console.log("Restarting the bot due to an update");
                 base.ipc.restartAllClusters();
             }
