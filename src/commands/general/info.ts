@@ -1,7 +1,7 @@
 import Watchdog from "../../structures/Watchdog";
 import config from "../../config.json";
 import BaseCommand from "../../structures/BaseCommand";
-import DiscordEmbed from "../../utils/DiscordEmbed";
+import DiscordEmbed from "../../structures/DiscordEmbed";
 import Context from "../../structures/Context";
 import { VERSION } from "eris";
 

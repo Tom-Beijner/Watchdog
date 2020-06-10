@@ -1,9 +1,9 @@
 import Watchdog from "../../structures/Watchdog";
 import config from "../../config.json";
 import BaseCommand from "../../structures/BaseCommand";
-import DiscordEmbed from "../../utils/DiscordEmbed";
+import DiscordEmbed from "../../structures/DiscordEmbed";
 import Context from "../../structures/Context";
-import { Readable } from "../../utils/Readable";
+import { readable } from "../../utils/Readable";
 
 export default class Stats extends BaseCommand {
     constructor() {
@@ -65,7 +65,7 @@ export default class Stats extends BaseCommand {
                 2
             )})MB\n` +
                 `CPU Usage: ${cpuUsage}%\n` +
-                `Uptime: ${Readable(
+                `Uptime: ${readable(
                     Date.now() - ctx.bot.startTime
                 )}\nLatency: ${avgPing}ms avg.`,
             true

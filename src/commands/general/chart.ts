@@ -1,7 +1,7 @@
 import BaseCommand from "../../structures/BaseCommand";
 import Context from "../../structures/Context";
 import { CanvasRenderService } from "chartjs-node-canvas";
-import DiscordEmbed from "../../utils/DiscordEmbed";
+import DiscordEmbed from "../../structures/DiscordEmbed";
 import Watchdog from "../../structures/Watchdog";
 import { IData } from "../../models/dataschema";
 

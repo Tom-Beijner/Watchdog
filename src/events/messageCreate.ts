@@ -3,7 +3,7 @@ import { Message } from "eris";
 import Watchdog from "../structures/Watchdog";
 import Context from "../structures/Context";
 import config from "../config.json";
-import DiscordEmbed from "../utils/DiscordEmbed";
+import DiscordEmbed from "../structures/DiscordEmbed";
 
 export default class messageCreate extends BaseEvent {
     constructor() {

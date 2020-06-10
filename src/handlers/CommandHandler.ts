@@ -1,12 +1,11 @@
 import { Message } from "eris";
 import Watchdog from "../structures/Watchdog";
 import config from "../config.json";
-import DiscordEmbed from "../utils/DiscordEmbed";
+import DiscordEmbed from "../structures/DiscordEmbed";
 import CommandModule from "../structures/CommandModule";
 import Context from "../structures/Context";
 
 export default class CommandHandler {
-    private modules: CommandModule[];
     private base: Watchdog;
     private bot: Watchdog["bot"];
 
@@ -14,10 +13,9 @@ export default class CommandHandler {
         this.messageEvent = this.messageEvent.bind(this);
     }
 
-    initialize(base: Watchdog, modules: CommandModule[]) {
+    initialize(base: Watchdog) {
         this.base = base;
         this.bot = base.bot;
-        this.modules = modules;
     }
 
     public hookEvent() {

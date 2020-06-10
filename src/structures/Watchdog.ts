@@ -119,7 +119,7 @@ export default class Watchdog extends BaseClusterWorker {
         await this.loadEvents();
 
         this.commandHandler = new CommandHandler();
-        this.commandHandler.initialize(this, this.modules);
+        this.commandHandler.initialize(this);
         this.commandHandler.hookEvent();
     }
 

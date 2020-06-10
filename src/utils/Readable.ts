@@ -1,4 +1,4 @@
-export function Readable(ms: number) {
+export function readable(ms: number) {
     const weeks = Math.floor(ms / 1000 / 60 / 60 / 24 / 7);
     ms -= weeks * 1000 * 60 * 60 * 24 * 7;
 

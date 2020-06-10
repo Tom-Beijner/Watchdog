@@ -1,6 +1,6 @@
 import config from "../config.json";
 
-export default function redact(code: string) {
+export function redact(code: string) {
     const tokens = [
         config.bot.token,
         config.database.host,

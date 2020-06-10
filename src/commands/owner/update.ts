@@ -1,10 +1,10 @@
 import BaseCommand from "../../structures/BaseCommand";
 import Context from "../../structures/Context";
 import { execSync } from "child_process";
-import DiscordEmbed from "../../utils/DiscordEmbed";
+import DiscordEmbed from "../../structures/DiscordEmbed";
 import { Message } from "eris";
 import Watchdog from "../../structures/Watchdog";
-import Redact from "../../utils/Redact";
+import { redact } from "../../utils";
 import config from "../../config.json";
 
 export default class Update extends BaseCommand {
@@ -24,7 +24,7 @@ export default class Update extends BaseCommand {
         const embed: DiscordEmbed = new DiscordEmbed().setTitle("Exec");
 
         function exec(code) {
-            return Redact(execSync(code).toString().trim());
+            return redact(execSync(code).toString().trim());
         }
 
         try {
