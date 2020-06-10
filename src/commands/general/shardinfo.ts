@@ -24,7 +24,6 @@ export default class Shardinfo extends BaseCommand {
 
         stats.clusters.forEach((cluster) => {
             cluster.shardStats.forEach((x) => {
-                console.log(x);
                 shards.push(x);
             });
         });

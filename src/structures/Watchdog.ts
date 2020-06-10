@@ -54,23 +54,55 @@ export default class Watchdog extends BaseClusterWorker {
         schedule.scheduleJob("0 0 * * *", async () => {
             console.log("Sending stats to database");
             const stats: any = await this.ipc.getStats();
-            const guildsData: IData = await this.database.Data.findOne({
-                type: "guilds",
-            });
-            if (!guildsData) {
-                new this.database.Data({
+            const handle = [
+                {
                     type: "guilds",
-                    amounts: [stats.guilds],
-                    dates: [Date.now()],
-                }).save();
-            } else {
-                // Make this part when adding more data
-                if (guildsData.amounts.length + 1 > 14)
-                    guildsData.amounts.shift();
-                if (guildsData.dates.length + 1 > 14) guildsData.dates.shift();
-                guildsData.amounts.push(stats.guilds);
-                guildsData.dates.push(Date.now());
-                guildsData.save();
+                    data: await this.database.Data.findOne({
+                        type: "guilds",
+                    }),
+                },
+                {
+                    type: "users",
+                    data: await this.database.Data.findOne({
+                        type: "users",
+                    }),
+                },
+                {
+                    type: "pings",
+                    data: await this.database.Data.findOne({
+                        type: "pings",
+                    }),
+                },
+            ];
+
+            handle.forEach((x) => handleData(this.database, x.data, x.type));
+
+            function handleData(database: Database, data: IData, type: string) {
+                let amounts: number;
+                const shards = [].concat.apply(
+                    [],
+                    stats.clusters.map((x) => x.shardStats)
+                );
+                if (type === "guilds") amounts = stats.guilds;
+                if (type === "users")
+                    amounts = shards.reduce((a, b) => a + b.users, 0);
+                if (type === "pings")
+                    amounts = shards.reduce((a, b) => a + b.latency, 0);
+
+                if (!data) {
+                    new database.Data({
+                        type,
+                        amounts: [amounts],
+                        dates: [Date.now()],
+                    }).save();
+                } else {
+                    // Make this part when adding more data
+                    if (data.amounts.length + 1 > 14) data.amounts.shift();
+                    if (data.dates.length + 1 > 14) data.dates.shift();
+                    data.amounts.push(amounts);
+                    data.dates.push(Date.now());
+                    data.save();
+                }
             }
         });
 
@@ -153,9 +185,10 @@ export default class Watchdog extends BaseClusterWorker {
                 const Event: BaseEvent = new event.default();
                 const EventData = Event.meta;
                 this.events.push(Event);
+
                 this.bot[EventData.runOnce ? "once" : "on"](
                     EventData.event,
-                    Event.execute.bind(this.bot, this)
+                    Event.execute.bind(this, this)
                 );
                 bar.increment(1, {
                     name: EventData.event,

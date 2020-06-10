@@ -8,7 +8,7 @@ export default class shardReady extends BaseEvent {
         });
     }
 
-    async execute(bot: Watchdog["bot"], id: number) {
+    async execute(base: Watchdog, id: number) {
         console.log(`Shard ${id} is ready!`);
     }
 }

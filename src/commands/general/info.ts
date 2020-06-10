@@ -32,8 +32,11 @@ export default class Info extends BaseCommand {
                 : "Uh Oh seems like I don't have any developers?!?",
             true
         );
-        embed.addField("Node.js Version", process.version, true);
-        embed.addField("Eris Version", `v${VERSION}`, true);
+        embed.addField(
+            "Version",
+            `Node.js ${process.version}\nEris v${VERSION}`,
+            true
+        );
 
         embed.addField(
             "Shard info",

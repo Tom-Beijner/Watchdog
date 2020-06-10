@@ -3,6 +3,7 @@ import Context from "../../structures/Context";
 import { CanvasRenderService } from "chartjs-node-canvas";
 import DiscordEmbed from "../../utils/DiscordEmbed";
 import Watchdog from "../../structures/Watchdog";
+import { IData } from "../../models/dataschema";
 
 export default class Info extends BaseCommand {
     constructor() {
@@ -51,30 +52,43 @@ export default class Info extends BaseCommand {
             () => {}
         );
 
-        const type = ctx.args[0] || "guilds";
-        const data = await base.database.Data.findOne({ type });
-        if (!data) {
+        let type = ctx.args[0];
+        type = type ? type.toLowerCase() : "";
+        const data = await base.database.Data.find(type ? { type } : {});
+        if (!data.length) {
             embed.setDescription("This type of chart doesn't exist");
             return ctx.embed(embed.getEmbed());
         }
+
+        const colors = [
+            { bgColor: "rgba(255,99,132,0.2)", bColor: "rgba(255,99,132,1)" },
+            { bgColor: "rgba(255,238,136,0.2)", bColor: "rgba(255,238,136,1)" },
+            { bgColor: "rgba(128,255,0,0.2)", bColor: "rgba(128,255,0,1)" },
+        ];
+
+        function datasets(data: IData[]) {
+            return data.map((x: IData, i: number) => {
+                return {
+                    label:
+                        x.type !== "pings" ? `# of ${x.type}` : "average pings",
+                    data: x.amounts,
+                    backgroundColor: colors[i].bgColor,
+                    borderColor: colors[i].bColor,
+                };
+            });
+        }
+
         const image = await canvasRenderService.renderToBuffer({
             type: "line",
             data: {
                 labels: data
-                    ? data.dates.map((date) => {
+                    ? data[0].dates.map((date) => {
                           const cur = new Date(date);
 
                           return `${cur.getUTCMonth() + 1}/${cur.getUTCDate()}`;
                       })
                     : ["N/A"],
-                datasets: [
-                    {
-                        label: "# of Guilds",
-                        data: data ? data.amounts : [0],
-                        backgroundColor: "rgba(255, 99, 132, 0.2)",
-                        borderColor: "rgba(255,99,132,1)",
-                    },
-                ],
+                datasets: datasets(data),
             },
             options,
         });

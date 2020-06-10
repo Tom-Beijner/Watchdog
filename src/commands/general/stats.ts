@@ -37,20 +37,19 @@ export default class Stats extends BaseCommand {
         });
 
         const avgPing = shards.reduce((a, b) => a + b.latency, 0);
+        const users = shards.reduce((a, b) => a + b.users, 0);
 
         embed.addField(
             "General",
-            `Shards: ${ctx.guild!.shard.id + 1}/${
-                stats.shardCount
-            } (${avgPing}ms avg.)\n` +
+            `Clusters: ${stats.clusters.length}\nShards: ${
+                ctx.guild!.shard.id + 1
+            }/${stats.shardCount}\n` +
                 `Guilds: ${stats.guilds}\n` +
                 `Channels: ${Object.keys(ctx.bot.channelGuildMap).length}\n` +
-                `Users: ${stats.users}\n`,
+                `Users: ${users}\n`,
             true
         );
-        // Gets heap of memory used in bytes, so divide by 1024 two times to get MB
-        const memHeap = process.memoryUsage().heapUsed;
-        const megabytes = Math.round(memHeap / 1024 / 1024);
+
         // Gets the current cpu usage
         const cpuUsage = Math.floor(
             process.cpuUsage().user / process.cpuUsage().system
@@ -58,9 +57,11 @@ export default class Stats extends BaseCommand {
 
         embed.addField(
             "System",
-            `Ram Usage: ${megabytes}MB\n` +
+            `Ram Usage: ${stats.masterRam.toFixed(2)}MB\n` +
                 `CPU Usage: ${cpuUsage}%\n` +
-                `Uptime: ${Readable(Date.now() - ctx.bot.startTime)}\n`,
+                `Uptime: ${Readable(
+                    Date.now() - ctx.bot.startTime
+                )}\nLatency: ${avgPing}ms avg.`,
             true
         );
 

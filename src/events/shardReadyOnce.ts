@@ -9,9 +9,9 @@ export default class shardReady extends BaseEvent {
         });
     }
 
-    async execute(bot: Watchdog["bot"], id: number) {
-        bot.editStatus("online", {
-            name: `shard ${id} / ${bot.shards.size}`,
+    async execute(base: Watchdog, id: number) {
+        base.bot.editStatus("online", {
+            name: `shard ${id} / ${base.bot.shards.size}`,
             type: 3,
         });
     }

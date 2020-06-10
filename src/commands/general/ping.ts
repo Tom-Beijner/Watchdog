@@ -8,7 +8,7 @@ export default class Info extends BaseCommand {
             name: "ping",
             description: "Show the bot's ping",
             usage: "ping",
-            aliases: [],
+            aliases: ["latency"],
             requirements: [],
             deleteMessage: false,
         });
