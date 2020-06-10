@@ -36,7 +36,8 @@ export default class Stats extends BaseCommand {
             });
         });
 
-        const avgPing = shards.reduce((a, b) => a + b.latency, 0);
+        const avgPing =
+            shards.reduce((a, b) => a + b.latency, 0) / shards.length;
         const users = shards.reduce((a, b) => a + b.users, 0);
 
         embed.addField(
