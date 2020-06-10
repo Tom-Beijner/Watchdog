@@ -43,22 +43,27 @@ export default class Stats extends BaseCommand {
         embed.addField(
             "General",
             `Clusters: ${stats.clusters.length}\nShards: ${
-                ctx.guild!.shard.id + 1
-            }/${stats.shardCount}\n` +
+                stats.shardCount
+            } (#${ctx.guild!.shard.id + 1})\n` +
                 `Guilds: ${stats.guilds}\n` +
                 `Channels: ${Object.keys(ctx.bot.channelGuildMap).length}\n` +
                 `Users: ${users}\n`,
             true
         );
 
+        // Gets heap of memory used in bytes, so divide by 1024 two times to get MB
+        const memHeap = process.memoryUsage().heapUsed;
+        const megabytes = (memHeap / 1024 / 1024).toFixed(2);
         // Gets the current cpu usage
-        const cpuUsage = Math.floor(
+        const cpuUsage = (
             process.cpuUsage().user / process.cpuUsage().system
-        );
+        ).toFixed(2);
 
         embed.addField(
             "System",
-            `Ram Usage: ${stats.masterRam.toFixed(2)}MB\n` +
+            `Ram Usage: ${megabytes} (Total: ${stats.totalRam.toFixed(
+                2
+            )})MB\n` +
                 `CPU Usage: ${cpuUsage}%\n` +
                 `Uptime: ${Readable(
                     Date.now() - ctx.bot.startTime

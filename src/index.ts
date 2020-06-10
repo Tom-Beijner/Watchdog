@@ -12,7 +12,6 @@ const options: Options = {
         disableEvents: { TYPING_START: true },
     },
     lessLogging: true,
-    shards: 1,
 };
 
 const Admiral = new Fleet(options);
