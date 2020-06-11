@@ -1,13 +1,21 @@
-import { Message } from "eris";
+import { Message, TextChannel } from "eris";
 import Watchdog from "../structures/Watchdog";
 import config from "../config.json";
 import DiscordEmbed from "../structures/DiscordEmbed";
-import CommandModule from "../structures/CommandModule";
 import Context from "../structures/Context";
 
 export default class CommandHandler {
     private base: Watchdog;
     private bot: Watchdog["bot"];
+    private spam: Map<
+        string,
+        {
+            spam: boolean;
+            intervals: number[];
+            time: number;
+            average: number;
+        }
+    > = new Map();
 
     constructor() {
         this.messageEvent = this.messageEvent.bind(this);
@@ -44,9 +52,7 @@ export default class CommandHandler {
      * @param {Array} modules An array of all the loaded commmand modules
      */
     private async checkCommand(message: Message, args: string[]) {
-        if (message.author.bot && !message.member) {
-            return;
-        }
+        if (!message.member) return;
 
         if (
             message.content
@@ -77,6 +83,7 @@ export default class CommandHandler {
                         !this.bot.owners.includes(message.author.id)
                     )
                         return;
+
                     if (
                         !command.checkPermissions(message.member.permission) ||
                         !command.module.checkPermissions(
