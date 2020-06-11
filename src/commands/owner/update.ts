@@ -23,7 +23,7 @@ export default class Update extends BaseCommand {
         const message: Message = await ctx.send("Executing code...");
         const embed: DiscordEmbed = new DiscordEmbed().setTitle("Exec");
 
-        function exec(code) {
+        function exec(code: string) {
             return redact(execSync(code).toString().trim());
         }
 
