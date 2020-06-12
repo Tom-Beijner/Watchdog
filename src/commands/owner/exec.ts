@@ -24,6 +24,7 @@ export default class Exec extends BaseCommand {
         const embed: DiscordEmbed = new DiscordEmbed().setTitle("Exec");
 
         try {
+            const t1 = Date.now();
             let result: string = execSync(code).toString().trim();
 
             const res = redact(result);
@@ -35,11 +36,12 @@ export default class Exec extends BaseCommand {
             } else {
                 embed.addField(
                     "Output",
-                    res.length > 1024
+                    (res.length > 1024
                         ? `The output was too long, but was uploaded to [hastebin](https://hasteb.in/${await hastebin(
                               res
                           )})`
-                        : `\`\`\`js\n${res}\`\`\``
+                        : `\`\`\`js\n${res}\`\`\``) +
+                        `Took ${Date.now() - t1}ms`
                 );
             }
             await message.edit({ content: "", embed: embed.getEmbed() });

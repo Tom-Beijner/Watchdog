@@ -5,6 +5,7 @@ import { inspect } from "util";
 import DiscordEmbed from "../../structures/DiscordEmbed";
 import { Message } from "eris";
 import { hastebin, redact } from "../../utils";
+import { type } from "os";
 
 export default class Eval extends BaseCommand {
     constructor() {
@@ -24,6 +25,7 @@ export default class Eval extends BaseCommand {
         const embed: DiscordEmbed = new DiscordEmbed().setTitle("Eval");
 
         try {
+            const t1 = Date.now();
             let result: Eval | string = await eval(code);
             if (typeof result !== "string") {
                 result = inspect(result, {
@@ -41,11 +43,12 @@ export default class Eval extends BaseCommand {
             } else {
                 embed.addField(
                     "Output",
-                    res.length > 1024
+                    (res.length > 1024
                         ? `The output was too long, but was uploaded to [hastebin](https://hasteb.in/${await hastebin(
                               res
                           )})`
-                        : `\`\`\`js\n${res}\`\`\``
+                        : `\`\`\`js\n${res}\`\`\``) +
+                        `Took ${Date.now() - t1}ms`
                 );
             }
             await message.edit({ content: "", embed: embed.getEmbed() });
