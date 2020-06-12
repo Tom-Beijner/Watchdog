@@ -1,4 +1,3 @@
-import Watchdog from "../../structures/Watchdog";
 import BaseCommand from "../../structures/BaseCommand";
 import Context from "../../structures/Context";
 

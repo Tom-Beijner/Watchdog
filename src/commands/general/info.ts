@@ -1,4 +1,3 @@
-import Watchdog from "../../structures/Watchdog";
 import config from "../../config.json";
 import BaseCommand from "../../structures/BaseCommand";
 import DiscordEmbed from "../../structures/DiscordEmbed";

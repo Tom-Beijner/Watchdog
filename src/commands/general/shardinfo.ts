@@ -2,7 +2,6 @@ import Watchdog from "../../structures/Watchdog";
 import BaseCommand from "../../structures/BaseCommand";
 import Context from "../../structures/Context";
 import DiscordEmbed from "../../structures/DiscordEmbed";
-import { Stats } from "eris-fleet";
 
 export default class Shardinfo extends BaseCommand {
     constructor() {
