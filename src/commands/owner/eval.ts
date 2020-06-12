@@ -41,15 +41,16 @@ export default class Eval extends BaseCommand {
                     "The output was too long to be uploaded to hastebin"
                 );
             } else {
-                embed.addField(
-                    "Output",
-                    (res.length > 1024
-                        ? `The output was too long, but was uploaded to [hastebin](https://hasteb.in/${await hastebin(
-                              res
-                          )})\n`
-                        : `\`\`\`js\n${res}\`\`\``) +
-                        `Took ${Date.now() - t1}ms`
-                );
+                embed
+                    .addField(
+                        "Output",
+                        res.length > 1024
+                            ? `The output was too long, but was uploaded to [hastebin](https://hasteb.in/${await hastebin(
+                                  res
+                              )})\n`
+                            : `\`\`\`js\n${res}\`\`\``
+                    )
+                    .setFooter(`Took ${Date.now() - t1}ms`);
             }
             await message.edit({ content: "", embed: embed.getEmbed() });
         } catch (e) {
