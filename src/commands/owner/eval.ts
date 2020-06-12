@@ -46,7 +46,7 @@ export default class Eval extends BaseCommand {
                     (res.length > 1024
                         ? `The output was too long, but was uploaded to [hastebin](https://hasteb.in/${await hastebin(
                               res
-                          )})`
+                          )})\n`
                         : `\`\`\`js\n${res}\`\`\``) +
                         `Took ${Date.now() - t1}ms`
                 );
@@ -66,7 +66,7 @@ export default class Eval extends BaseCommand {
                     error.length > 1024
                         ? `The error was too long, but was uploaded to [hastebin](https://hasteb.in/${await hastebin(
                               error
-                          )})`
+                          )})\n`
                         : `\`\`\`js\n${error}\`\`\``
                 );
             }
