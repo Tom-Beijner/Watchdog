@@ -18,7 +18,7 @@
         "dev": "yarn run build && concurrently \"yarn:build:watch\" \"yarn:start:dev\""
     },
     "dependencies": {
-        "chart.js": "^2.9.3",
+        "chart.js": "^2.9.4",
         "chartjs-node-canvas": "^3.0.6",
         "cli-progress": "^3.8.2",
         "eris": "^0.13.1",
