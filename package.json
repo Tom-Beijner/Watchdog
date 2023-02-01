@@ -23,7 +23,7 @@
         "cli-progress": "^3.8.2",
         "eris": "^0.13.1",
         "eris-fleet": "^0.2.4",
-        "mongoose": "^5.9.18",
+        "mongoose": "^5.13.15",
         "node-fetch": "^2.6.0",
         "node-schedule": "^1.3.2"
     },
